@@ -4,15 +4,16 @@ import { SelectoresComponent } from './pages/selectores/selectores.component';
 import { AutorComponent } from './pages/autor/autor.component';
 import { TituloComponent } from './pages/titulo/titulo.component';
 import { ObrasComponent } from './pages/obras/obras.component';
+import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 
 const routes: Routes = [
   {
     path:'',
     children:[
       {path:'autor', component: AutorComponent},
-      {path:'titulo', component: TituloComponent},
       {path:'obra', component: ObrasComponent},
-      {path:'favoritos', component: SelectoresComponent},
+      {path:'selector', component: SelectoresComponent},
+      {path:'favoritos', component: FavoritosComponent},
       {path:'**', redirectTo: 'autor'}
     ]
   }

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { PoetryService } from '../../services/poetry.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Poetry } from '../../interfaces/poetry,interfaces';
+
 import { tap, switchMap, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Autor } from '../../interfaces/autor';
+import { Obras } from '../../interfaces/obras';
 
 
 @Component({
@@ -17,34 +20,41 @@ export class SelectoresComponent implements OnInit {
     autor: ['', [Validators.required]],
     obra: ['', [Validators.required]],
   });
-
+  autores: Autor[] = [];
+  obras: Obras[] = [];
+  autorSeleccionado: string = '';
   constructor(private fb: FormBuilder,
-    private poetryser: PoetryService) { }
-   
-    // poetry = new Observable<Poetry[]>();
-    
-    // authors = new Observable<Poetry[]>();
-    // title = new Observable<Poetry[]>();
+    private poetryser: PoetryService,private router:Router){}
 
-  poetry:Poetry [] = [];
-  authors: string[] = [];
-  title: string[] = [];
-  cargando: boolean = false;
-  
   ngOnInit(): void {
-    
-
-    // this.poetryser.getAutores('autor').subscribe((poetry)=>{
-    //   this.poetry = poetry
-    //   console.log(this.poetry)
-    // });
-    
-    
- 
-
+     this.mostrarAutores();
+  
   }
-
-  guardar() {
-    console.log(this.miFormulario.value);
+mostrarAutores() {
+    this.poetryser.getAutor().subscribe({
+      next: (data: Autor) => {
+        if (data) {
+          this.autores = data.authors.map(author => ({ authors: [author] }));
+        }
+      },
+    
+    });
+  }
+  mostrarObrasAutor(nombreAutor: string) {
+    if (nombreAutor === this.autorSeleccionado) {
+      this.autorSeleccionado = '';
+      this.obras = [];
+    } else {
+      this.autorSeleccionado = nombreAutor;
+      this.poetryser.getObrasAutor(nombreAutor).subscribe({
+        next: (data: Obras[]) => {
+          if (data) {
+            this.obras = data;
+          }
+        }
+      });
+      console.log(this.obras);
+      
+    }
   }
 }

@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AutorComponent } from './pages/autor/autor.component';
 import { TituloComponent } from './pages/titulo/titulo.component';
 import { ObrasComponent } from './pages/obras/obras.component';
-import { ListadoComponent } from './components/listado/listado.component';
+import { FavoritosComponent } from './pages/favoritos/favoritos.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { ListadoComponent } from './components/listado/listado.component';
     SelectoresComponent,
     TituloComponent,
     ObrasComponent,
-    ListadoComponent
+    FavoritosComponent
   ],
   imports: [
     CommonModule,

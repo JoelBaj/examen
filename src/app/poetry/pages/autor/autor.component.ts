@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Poetry } from '../../interfaces/poetry,interfaces';
 import { PoetryService } from '../../services/poetry.service';
+import { Autor } from '../../interfaces/autor';
+import { Obras } from '../../interfaces/obras';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-autor',
@@ -10,15 +12,41 @@ import { PoetryService } from '../../services/poetry.service';
 })
 export class AutorComponent implements OnInit {
   
-  autores: Poetry[] = [];
-  constructor(private poetryService:PoetryService){}
+  autores: Autor[] = [];
+  obras: Obras[] = [];
+  autorSeleccionado: string = '';
+
+  constructor(private autoresService:PoetryService,private router:Router){}
 
   ngOnInit(): void {
-    this.poetryService.getAutores()
-    .subscribe(autores=>{
-      this.autores = autores;
-      console.log(this.autores)
-    })
+     this.mostrarAutores();
+  
   }
-
+mostrarAutores() {
+    this.autoresService.getAutor().subscribe({
+      next: (data: Autor) => {
+        if (data) {
+          this.autores = data.authors.map(author => ({ authors: [author] }));
+        }
+      },
+    
+    });
+  }
+  mostrarObrasAutor(nombreAutor: string) {
+    if (nombreAutor === this.autorSeleccionado) {
+      this.autorSeleccionado = '';
+      this.obras = [];
+    } else {
+      this.autorSeleccionado = nombreAutor;
+      this.autoresService.getObrasAutor(nombreAutor).subscribe({
+        next: (data: Obras[]) => {
+          if (data) {
+            this.obras = data;
+          }
+        }
+      });
+      console.log(this.obras);
+      
+    }
+  }
 }

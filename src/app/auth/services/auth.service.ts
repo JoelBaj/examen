@@ -1,9 +1,44 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() { }
+  private isLoggedIn = false;
+  private tokenKey = 'Joel';
+
+  constructor() {
+  }
+
+  validarToken(): Observable<boolean> {
+    const token = localStorage.getItem(this.tokenKey);
+    if(!token){
+      return of(false);
+    } else {
+      return of(true)
+    }
+  }
+
+  login(usuario: string, password: string): boolean {
+    if (usuario === 'admin' && password === 'admin') {
+      localStorage.setItem(this.tokenKey, 'Joel');
+      this.isLoggedIn = true;
+      return true;
+    } else {
+      this.isLoggedIn = false;
+      return false;
+    }
+  }
+
+
+  logout(): void {
+    localStorage.removeItem(this.tokenKey);
+    this.isLoggedIn = false;
+  }
+
+  get loggedIn(): boolean {
+    return this.isLoggedIn;
+  }
 }

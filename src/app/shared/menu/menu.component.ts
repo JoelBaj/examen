@@ -14,6 +14,7 @@ export class MenuComponent {
   constructor() { }
   Menu:MenuItem[] =[
     {texto:'Autores', ruta:'/poetry/autor'},
+    {texto:'Selector', ruta:'/poetry/selector'},
     {texto:'Favoritos', ruta:'/poetry/favoritos'},
     
   ]

@@ -2,15 +2,14 @@
 <h2 class="mt-5">Selectores autores</h2>
 <hr>
 
-<form [formGroup]="miFormulario" (ngSubmit)="guardar()">
+<form [formGroup]="miFormulario">
     <!-- autor -->
     <div class="row mb-3">
         <div class="col">
             <label class="form-label">autor:</label>
             <select class="form-control" formControlName="autor">
                 <option value=""> -- Seleccione autor -- </option>
-                <option *ngFor="let autor of authors" 
-                [value]="autor | lowercase"> {{autor}} </option>
+                <option *ngFor="let autor of autores"> {{ autor.authors[0] }} </option>
             </select>
         </div>
     </div>

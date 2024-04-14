@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -7,21 +7,26 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
-    miFormulario: FormGroup = this.fb.group({
-      email:['test1@test.com', [Validators.required, Validators.email]],
-      password:['123456', [Validators.required, Validators.minLength(6)]]
+export class LoginComponent implements OnInit {
+    
+  loading = false;
+
+  miFormulario: FormGroup = this.fb.group({
+      email:['joel', [Validators.required]],
+      password:['12345', [Validators.required]]
     })
     
     constructor(private fb: FormBuilder, private router:Router) { 
 
     }
+  ngOnInit(): void {
+    
+  }
+
+  
     login() { 
-       this.router.navigate(['./poetry/pages/selectores'])
+       this.router.navigate(['./poetry/pages/autor'])
       //this.router.navigate(['./poetry/pages/menu'])
      
-      
-
-    
     }
 }
